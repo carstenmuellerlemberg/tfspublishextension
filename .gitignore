@@ -1,0 +1,7 @@
+publishTask/node_modules/ 
+.vscode
+publish
+*.apk
+*.ipa
+*.js
+
