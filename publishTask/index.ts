@@ -5,7 +5,6 @@ const FormData = require('form-data');
 
 async function run() {
     try {
-        console.log('Path', __dirname );
         const branchname: string = tl.getInput('branchid', true);
         if (branchname.match("^[a-zA-Z0-9.]+$") === null) {
             tl.setResult(tl.TaskResult.Failed, 'Invalid branch id');
@@ -17,39 +16,48 @@ async function run() {
             return;
         }
 
-        const filepath: string = tl.getInput('filepath', true);
+        let filepath: string = tl.getInput('filepath', true);
         if (filepath === "filepathrelative") {
             tl.setResult(tl.TaskResult.Failed, 'Missing filepath');
             return;
         }
-        const filePath = __dirname + "\\" +filepath;
 
-        if (!tl.exist( filePath )) {
-            console.error("File not found", filePath);
+        if (!tl.exist( filepath )) {
+            console.error("File not found", filepath);
             tl.setResult(tl.TaskResult.Failed, 'File not found');
             return;
         }
-
+        
         const version = tl.getVariable("version");
+        console.info(`Processing version: ${version}`);
 
-        const readStream = createReadStream(filePath);
+        const readStream = createReadStream(filepath);
       
         const formData = {
             branch: branchname,
             apikey: apikey,
             app:  readStream,
-            version: "1.1.2"
+            version
         };
     
      
-        request.post({url:'http://localhost:8080/api/ci', formData}, function optionalCallback(err: any, httpResponse: any, body: any) {
+        request.post({url:'https://myappci.com/api/ci', formData,  timeout: 1200000,}, function optionalCallback(err: any, httpResponse: any, body: any) {
             if (err) {
               return console.error('upload failed:', err);
             }
-            if (body === "Conflict") {
-                console.log('Version conflict. Version needs to be increased within a branch');
-            } else {
-                console.log('Upload successful!  Server responded with:', body);
+            if ( httpResponse.statusCode === 200) {
+                if (body === "Conflict") {
+                    tl.setResult(tl.TaskResult.Failed, 'Version conflict. Version needs to be increased within a branch');
+                    return;
+                } else {
+                    tl.setResult(tl.TaskResult.Succeeded, `Upload successfull to branch: ${branchname}`);
+                    console.log('Upload successful!');
+                    return;
+                }
+            }
+            if (httpResponse.statusCode === 403) {
+                console.error('Access denied to branch!');
+                tl.setResult(tl.TaskResult.Failed, 'Access denied to branch!');
             }
          });
 

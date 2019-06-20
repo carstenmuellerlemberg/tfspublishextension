@@ -1,7 +1,7 @@
 {
     "id": "fa9a1da6-20b8-40ec-a817-ca670e00c005",
     "name": "MyAppCI",
-    "friendlyName": "MyAppCI continious app upload",
+    "friendlyName": "MyAppCI continuous app upload",
     "description": "Task to upload apk and ipa files into a CI branch configured in MyAppCI.com. Professional subscription is required.",
     "helpMarkDown": "",
     "category": "Utility",
@@ -9,17 +9,17 @@
     "version": {
         "Major": 0,
         "Minor": 1,
-        "Patch": 0
+        "Patch": 3
     },
     "instanceNameFormat": "Echo MyAppCI publishing app to Branch: $(branchid), File: $(filepath)",
     "inputs": [
         {
             "name": "branchid",
-            "type": "Branch Id (CI Branch)",
-            "label": "Sample String",
+            "type": "string",
+            "label": "Branch Id (CI Branch)",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "A sample string"
+            "helpMarkDown": "The branch id for a configured CI branch."
         },
         {
             "name": "apikey",
@@ -27,7 +27,7 @@
             "label": "API Key of the branch",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "A sample string"
+            "helpMarkDown": "The API key for a configured CI branch."
         },
         {
             "name": "filepath",

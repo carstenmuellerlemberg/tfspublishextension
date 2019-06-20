@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "myappci-upload-task",
     "name": "MyAppCI build tools",
-    "version": "0.0.5",
+    "version": "0.0.78",
     "publisher": "MyAppCI",
     "targets": [
         {
