@@ -51,13 +51,11 @@ async function run() {
                     return;
                 } else {
                     tl.setResult(tl.TaskResult.Succeeded, `Upload successfull to branch: ${branchname}`);
-                    console.log('Upload successful!');
                     return;
                 }
             }
             if (httpResponse.statusCode === 403) {
-                console.error('Access denied to branch!');
-                tl.setResult(tl.TaskResult.Failed, 'Access denied to branch!');
+                tl.setResult(tl.TaskResult.Failed, `Access denied to branch: ${branchname}`);
             }
          });
 

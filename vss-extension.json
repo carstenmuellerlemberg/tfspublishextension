@@ -2,8 +2,17 @@
     "manifestVersion": 1,
     "id": "myappci-upload-task",
     "name": "MyAppCI build tools",
-    "version": "0.0.78",
+    "version": "0.0.84",
+    "public": true,
     "publisher": "MyAppCI",
+    "content": {
+        "details": {
+            "path": "overview.md"
+        }
+    },
+    "galleryFlags": [
+            "Preview"
+    ],
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
@@ -14,7 +23,12 @@
         "Azure Pipelines"
     ],
     "icons": {
-        "default": "images/myappci.png"        
+        "default": "PublisherLogo.png"        
+    },
+    "links": {
+        "support": {
+            "uri": "https://myappci.com"
+        }
     },
     "files": [
         {
