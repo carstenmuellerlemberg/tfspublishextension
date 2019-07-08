@@ -54,6 +54,9 @@ async function run() {
                     return;
                 }
             }
+            if (httpResponse.statusCode === 409) {
+                tl.setResult(tl.TaskResult.Failed, `Version conflict. Most likley you need to increase your version number`);
+            }
             if (httpResponse.statusCode === 403) {
                 tl.setResult(tl.TaskResult.Failed, `Access denied to branch: ${branchname}`);
             }
