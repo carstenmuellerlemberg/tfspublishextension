@@ -6,7 +6,7 @@ const FormData = require('form-data');
 async function run() {
     try {
         const branchname: string = tl.getInput('branchid', true);
-        if (branchname.match("^[a-zA-Z0-9.]+$") === null) {
+        if (branchname.match("^[a-zA-Z0-9+=/]*$/g") === null) {
             tl.setResult(tl.TaskResult.Failed, 'Invalid branch id');
             return;
         }
